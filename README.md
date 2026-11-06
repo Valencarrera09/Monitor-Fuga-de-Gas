@@ -396,7 +396,7 @@ Si querés reutilizarlo, modificarlo o publicarlo, citá el repositorio y contac
 
 ## 👩‍💻 Créditos
 
-Creado y desarrollado por **[@valengarcia09](https://github.com/valengarcia09)**.
+Creado y desarrollado por **[@valengarcia09](https://github.com/valengarcia09)** Y **[ziongarcia02jf](https://github.com/ziongarcia02jf)**
 
 Construido con:
 
