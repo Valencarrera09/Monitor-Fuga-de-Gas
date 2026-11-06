@@ -149,23 +149,6 @@ El sensor entrega un valor analógico entre **0 y 1023**. No son PPM calibrados:
 | 1 | **Servo SG90** | Abre y cierra la ventana (0° cerrada, 90° abierta). |
 | — | **Cables, protoboard y fuente de 5 V** | Conexionado general. |
 
-## 🔌 Conexiones
-
-```text
-[Arduino UNO / Nano]
-  ├── 5V  ─────────────── VCC (MQ-135, buzzer y servo)
-  ├── GND ─────────────── GND (MQ-135, buzzer, cátodo del LED, relé y servo)
-  ├── A0  ─────────────── AO  (salida analógica del MQ-135)
-  ├── D8  ─────────────── S   (señal del buzzer)
-  ├── D7  ─────────────── 220 Ω ── ánodo del LED amarillo
-  ├── D6  ─────────────── IN  (módulo relé → 2 coolers de 12 V)
-  └── D9  ─────────────── señal del servo SG90 (ventana)
-```
-
-> ⚡ Los coolers **no** se conectan al Arduino: el relé actúa como interruptor de la fuente de 12 V. Verificá la polaridad y la corriente de tu fuente antes de conectar todo.
-
----
-
 ## 📂 Estructura del proyecto
 
 ```text
