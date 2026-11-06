@@ -149,17 +149,6 @@ El sensor entrega un valor analógico entre **0 y 1023**. No son PPM calibrados:
 | 1 | **Servo SG90** | Abre y cierra la ventana (0° cerrada, 90° abierta). |
 | — | **Cables, protoboard y fuente de 5 V** | Conexionado general. |
 
-### Recomendaciones de armado
-
-- 🔥 **No alimentes los coolers desde el Arduino.** El Arduino solo maneja la señal `IN` del relé; los coolers van a su propia fuente de 12 V.
-- 🔌 **Uní las masas.** La fuente de 12 V, el módulo relé y el Arduino tienen que compartir GND.
-- ⚙️ **Revisá la lógica del relé.** La mayoría de los módulos se activan con `LOW`. Si los coolers quedan encendidos al revés, cambiá `RELE_ACTIVO_BAJO` a `false` en el firmware.
-- 🪟 **Cuidado con el servo.** Si tiembla o el Arduino se reinicia al moverlo, alimentalo con una fuente externa de 5 V y uní el GND.
-- 🌫️ **Dejá calentar el MQ-135.** Las primeras lecturas son inestables. Para mediciones más confiables, dejalo precalentando varias horas (idealmente 24–48 h) antes de usarlo en serio.
-- 💧 **Mantené el sensor lejos del agua y la condensación.** No es sumergible.
-
----
-
 ## 🔌 Conexiones
 
 ```text
