@@ -8,14 +8,11 @@ const NIVEL_PRECAUCION = UMBRAL * 0.75; // Franja ámbar: a partir de este valor
 const HISTORIAL_MAX_EVENTOS = 100;
 const HISTORIAL_LS = "gasguard_historial_v1";
 
-// ===== Alerta por WhatsApp (CallMeBot) =====
-// Para activarla, una sola vez:
-//   1) Guardá en tus contactos el número +34 621 33 11 709 (bot de CallMeBot)
-//   2) Mandale ese mensaje exacto: "I allow callmebot to send me messages"
-//   3) Te responde con una apikey: pegala aquí abajo junto a TU número
-const ALERTA_WSP = {
-    destino: "+549XXXXXXXXXX",   // ← Tu teléfono con código país (ej: +5491123456789)
-    apikey: "ACA_VA_TU_APIKEY",  // ← La que te devuelve CallMeBot
+// ===== Alerta por Telegram =====
+// Bot creado con @BotFather: manda la alerta como mensaje directo al celu
+const ALERTA_TELEGRAM = {
+    token: "9112820785:AAErbuHkt1a-sokyHpPHACU6faMVricszow", // ← Token que te dio BotFather
+    chat_id: "5821924843",       // ← Tu chat_id (el que sale en getUpdates)
     recordatorioMs: 5 * 60 * 1000 // Si la fuga sigue activa, reavisa cada 5 minutos
 };
 
@@ -391,28 +388,26 @@ function procesarDatoSerial(texto) {
     actualizarPantalla(valor, valor > UMBRAL, '📡 Puerto serie USB');
 }
 
-// ===== Alerta por WhatsApp =====
-function alertaConfigurada() {
-    return /^\+\d{10,15}$/.test(ALERTA_WSP.destino)
-        && /^[\w-]{6,}$/.test(ALERTA_WSP.apikey)
-        && ALERTA_WSP.apikey !== "ACA_VA_TU_APIKEY";
+// ===== Alerta por Telegram =====
+function telegramConfigurado() {
+    return /^\d{8,12}:[\w-]{30,}$/.test(ALERTA_TELEGRAM.token)
+        && /^-?\d+$/.test(ALERTA_TELEGRAM.chat_id);
 }
 
-// Envía el mensaje vía CallMeBot. mode "no-cors": el pedido parte igual
+// Envía el mensaje vía la API de bots de Telegram. mode "no-cors": el pedido parte igual
 // aunque el servidor no permita leer la respuesta desde el navegador.
-function mandarWhatsApp(texto) {
-    if (!alertaConfigurada()) {
-        console.warn("⚠️ Alerta WhatsApp sin configurar: completá ALERTA_WSP al inicio de java.js");
+function mandarTelegram(texto) {
+    if (!telegramConfigurado()) {
+        console.warn("⚠️ Alerta Telegram sin configurar: completá ALERTA_TELEGRAM al inicio de java.js");
         return false;
     }
-    const url = "https://api.callmebot.com/whatsapp.php"
-        + "?phone=" + encodeURIComponent(ALERTA_WSP.destino)
-        + "&text=" + encodeURIComponent(texto)
-        + "&apikey=" + encodeURIComponent(ALERTA_WSP.apikey);
+    const url = "https://api.telegram.org/bot" + ALERTA_TELEGRAM.token + "/sendMessage"
+        + "?chat_id=" + encodeURIComponent(ALERTA_TELEGRAM.chat_id)
+        + "&text=" + encodeURIComponent(texto);
 
     fetch(url, { mode: "no-cors" })
-        .then(() => console.log("📱 Alerta WhatsApp enviada"))
-        .catch(err => console.error("No se pudo enviar la alerta WhatsApp:", err));
+        .then(() => console.log("📲 Alerta Telegram enviada"))
+        .catch(err => console.error("No se pudo enviar la alerta Telegram:", err));
     return true;
 }
 
@@ -435,36 +430,36 @@ function notificarFuga(valor, simulada) {
         "\nVentilá, cerrá la llave y salí de la casa." +
         "\nDesde afuera llamá al 100 (Bomberos).";
 
-    mandarWhatsApp(texto);
+    mandarTelegram(texto);
     if ($('tag-wsp')) $('tag-wsp').hidden = false;
 
-    if (!alertaConfigurada()) return; // sin config: no programar recordatorios
+    if (!telegramConfigurado()) return; // sin config: no programar recordatorios
 
     detenerRecordatorio();
     recordatorioFuga = setInterval(() => {
-        mandarWhatsApp("⏰ GasGuard Pro: la fuga de gas SIGUE detectada a las " +
+        mandarTelegram("⏰ GasGuard Pro: la fuga de gas SIGUE detectada a las " +
             new Date().toLocaleTimeString("es-AR") + ". Ventilá y salí del lugar.");
-    }, ALERTA_WSP.recordatorioMs);
+    }, ALERTA_TELEGRAM.recordatorioMs);
 }
 
 // El sensor vuelve a valores normales tras una fuga notificada
 function avisarFinDeFuga(simulada) {
     detenerRecordatorio();
     const hora = new Date().toLocaleTimeString("es-AR");
-    mandarWhatsApp("🟢 GasGuard Pro: el nivel de gas vuelve a valores normales a las " + hora +
+    mandarTelegram("🟢 GasGuard Pro: el nivel de gas vuelve a valores normales a las " + hora +
         ". Igual esperá unos minutos y ventilá bien antes de volver a entrar." +
         (simulada ? "\n🧪 (modo simulación)" : ""));
 }
 
-// Botón de prueba: envía un WhatsApp aunque no haya fuga
-function probarAlertaWhatsApp() {
-    const btn = $('btnWsp');
-    const enviado = mandarWhatsApp("🧪 Prueba GasGuard Pro: si este mensaje te llegó, tu alerta por WhatsApp funciona correcto ✔ " +
+// Botón de prueba: envía un Telegram aunque no haya fuga
+function probarAlertaTelegram() {
+    const btn = $('btnTg');
+    const enviado = mandarTelegram("🧪 Prueba GasGuard Pro: si este mensaje te llegó, tu alerta por Telegram funciona correcto ✔ " +
         new Date().toLocaleTimeString("es-AR"));
 
     if (!btn) return;
-    btn.innerText = enviado ? "✅ Enviado — revisá tu WhatsApp" : "⚠️ Sin configure — editá ALERTA_WSP en java.js";
-    setTimeout(() => { btn.innerText = "📱 Probar alerta WhatsApp"; }, 3000);
+    btn.innerText = enviado ? "✅ Enviado — revisá tu Telegram" : "⚠️ Sin configure — editá ALERTA_TELEGRAM en java.js";
+    setTimeout(() => { btn.innerText = "📲 Probar alerta Telegram"; }, 3000);
 }
 
 // ===== Simulador =====
@@ -563,7 +558,7 @@ function actualizarPantalla(valor, esPeligro, fuente) {
             'Mantené la calma y seguí los pasos de abajo 👇');
         $('ppmProgress').className = 'progress-fill fill-danger';
 
-        // Alerta por WhatsApp: solo al INICIO de la fuga (anti-spam)
+        // Alerta por Telegram: solo al INICIO de la fuga (anti-spam)
         if (!fugaNotificada) {
             fugaNotificada = true;
             notificarFuga(valor, simulada);
@@ -583,7 +578,7 @@ function actualizarPantalla(valor, esPeligro, fuente) {
         $('ppmProgress').className = 'progress-fill fill-safe';
     }
 
-    // Fin de la fuga notificada: aviso por WhatsApp apenas retorna la calma
+    // Fin de la fuga notificada: aviso por Telegram apenas retorna la calma
     if (!esPeligro && fugaNotificada) {
         fugaNotificada = false;
         avisarFinDeFuga(simulada);
