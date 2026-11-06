@@ -46,6 +46,7 @@ Diseñado específicamente para operar de forma autónoma (ideal para entornos e
 | **Extracción** | Servo Motor (SG90) | Abre una ventana para expulsar el gas al exterior y la cierra cuando el sensor deja de detectarlo. |
 | **Interfaz Web** | HTML5, CSS3 (Variables, Grid/Flexbox) | Estructura responsiva y diseño futurista en modo oscuro. |
 | **Lógica Frontend** | JavaScript (Vanilla / ES6+) | Gestión de streams seriales, gráficos y manejo de modales. |
+| **Firmware** | `GasGuard/GasGuard.ino` (IDE de Arduino) | Lectura del MQ-135, sirena "I-O", relé de coolers y servo de la ventana. |
 
 ---
 
