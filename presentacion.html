@@ -92,7 +92,7 @@ body {
 @keyframes flotar { 0%,100% { transform: translateY(0);} 50% { transform: translateY(8px);} }
 
 /* ===== Secciones ===== */
-section { padding: 90px 0; }
+section { padding: 55px 0; }
 .kicker {
     color: var(--accent);
     font-weight: 800;
@@ -114,8 +114,8 @@ h2 {
 .grid-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
-    margin-top: 44px;
+    gap: 16px;
+    margin-top: 40px;
 }
 .stat {
     background: var(--card-bg);
@@ -135,9 +135,9 @@ h2 {
 /* ===== Casos reales ===== */
 .grid-casos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 18px;
-    margin-top: 44px;
+    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
 }
 .caso {
     background: var(--card-bg);
@@ -186,18 +186,14 @@ h2 {
 .tarjeta .icono { font-size: 2rem; display: block; margin-bottom: 14px; }
 
 /* ===== Solución / pasos ===== */
-.pasos { margin-top: 44px; display: grid; gap: 14px; }
+.pasos { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .paso {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 24px 28px;
+    padding: 24px;
 }
 .paso .n {
-    flex: 0 0 auto;
     width: 46px; height: 46px;
     border-radius: 12px;
     background: rgba(56, 189, 248, 0.12);
@@ -207,29 +203,35 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 16px;
 }
-.paso h3 { font-size: 1.15rem; margin-bottom: 6px; }
-.paso p { color: var(--text-secondary); font-size: 0.98rem; }
+.paso h3 { font-size: 1.1rem; margin-bottom: 8px; }
+.paso p { color: var(--text-secondary); font-size: 0.95rem; }
 .nota-coste {
-    margin-top: 26px;
+    margin-top: 20px;
     border: 1px dashed rgba(16, 185, 129, 0.45);
     background: rgba(16, 185, 129, 0.08);
     border-radius: 16px;
-    padding: 22px 26px;
+    padding: 20px 26px;
     color: var(--text-secondary);
 }
 .nota-coste b { color: var(--safe); }
 
 /* ===== Visión ===== */
-.vision-lista { margin-top: 40px; display: grid; gap: 14px; }
+.vision-lista { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .vision-item {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 24px 28px;
+    padding: 24px;
     color: var(--text-secondary);
+    font-size: 0.98rem;
 }
 .vision-item b { color: var(--text-primary); }
+
+@media (max-width: 900px) {
+    .pasos, .vision-lista { grid-template-columns: 1fr; }
+}
 
 /* ===== CONTADOR EN VIVO (final) ===== */
 .contador-final {
