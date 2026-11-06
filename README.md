@@ -72,10 +72,3 @@ El sistema envía notificaciones push al celular mediante un bot de Telegram (gr
 * 🚨 **Fuga detectada:** alerta inmediata con la hora y el nivel del sensor.
 * ⏰ **Recordatorio:** si la fuga continúa, reavisa cada 5 minutos.
 * 🟢 **Normalización:** aviso cuando el aire vuelve a valores seguros.
-
-**Configuración (una sola vez):**
-
-1. Hablá con [@BotFather](https://t.me/BotFather) en Telegram, mandá `/newbot` y seguí los pasos → te devuelve el **token** del bot.
-2. Abrí tu bot, mandale cualquier mensaje y entrá a `https://api.telegram.org/bot<TU_TOKEN>/getUpdates` → ahí aparece tu **chat_id**.
-3. Pegá ambos valores en `ALERTA_TELEGRAM` al inicio de `java.js`.
-4. Probá con el botón **"📲 Probar alerta Telegram"** del simulador de la página.
