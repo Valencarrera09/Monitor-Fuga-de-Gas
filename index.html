@@ -27,6 +27,10 @@
             </div>
         </header>
 
+        <div class="dashboard-main">
+        <!-- Columna izquierda: estado, medidor y gráfico -->
+        <div class="col-monitor">
+
         <!-- Panel Principal de Estado -->
         <section id="statusCard" class="main-card status-idle" aria-live="assertive">
             <div class="card-icon">
@@ -61,6 +65,11 @@
             </div>
         </div>
 
+        </div><!-- /col-monitor -->
+
+        <!-- Columna derecha: alertas y guía de emergencia (a un costado, sin estirar la página) -->
+        <aside class="col-alertas">
+
         <!-- PANEL DE ACCIONES FÍSICAS (Aparece únicamente al detectar fuga) -->
         <div id="actionAlertPanel" class="action-alert-panel">
             <div class="alert-header">
@@ -70,10 +79,8 @@
             <div class="actions-grid">
                 <div class="action-tag">🔴 Alarma LED encendida</div>
                 <div class="action-tag">🔊 Sonido de alarma activo</div>
-                <!-- Cuando agregues el servomotor y los ventiladores, descomentá estas dos líneas:
-                <div class="action-tag">🪟 Ventanas abiertas (Servomotor)</div>
+                <div class="action-tag">🪟 Ventana abierta (Servomotor)</div>
                 <div class="action-tag">🌀 Ventiladores circulando aire</div>
-                -->
                 <div class="action-tag" id="tag-wsp" hidden>📲 Alerta enviada por Telegram</div>
             </div>
         </div>
@@ -155,6 +162,9 @@
                 <li>🔥 <strong>Prevención:</strong> Mantené los productos inflamables lejos de fuentes de calor.</li>
             </ul>
         </section>
+
+        </aside><!-- /col-alertas -->
+        </div><!-- /dashboard-main -->
 
         <!-- Panel de Control / Conexión USB y Simulador -->
         <footer class="control-panel">

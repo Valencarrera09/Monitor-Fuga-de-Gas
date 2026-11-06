@@ -90,6 +90,29 @@ body.leak-mode::after {
     animation: fade-up 0.6s ease-out;
 }
 
+/* Layout en dos columnas (desktop): medidor a la izquierda, alertas a la derecha.
+   La columna de alertas tiene scroll propio: la página NO crece al detectar una fuga. */
+.dashboard-main { display: block; }
+
+@media (min-width: 980px) {
+    .dashboard-container { max-width: 1100px; }
+    .dashboard-main {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: 18px;
+        height: 620px;
+    }
+    .col-alertas {
+        overflow-y: auto;
+        padding-right: 6px;
+    }
+    .col-alertas::-webkit-scrollbar { width: 8px; }
+    .col-alertas::-webkit-scrollbar-track { background: transparent; }
+    .col-alertas::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 8px; }
+    /* La guía se lee mejor en una sola columna dentro del panel lateral */
+    .col-alertas .guide-columns { grid-template-columns: 1fr; }
+}
+
 @keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
